@@ -13,7 +13,7 @@ export default {
         return [
             {
                 slug: 'originals',
-                title: 'Originais do Netflix',
+                title: 'Series Originais',
                 items: await basicFetch(`/discover/tv?with_network=213&language=pt-BR&api_key=${API_KEY}`)
             },
             {
@@ -29,39 +29,46 @@ export default {
             {
             slug: 'action',
                 title: 'Filmes de Ação',
-                items: await basicFetch(`/discover/movie?with_genres=28?&language=pt-BR&api_key=${API_KEY}`)
+                items: await basicFetch(`/discover/movie?language=pt-BR&api_key=${API_KEY}&with_genres=28`)
             },
             {
             slug: 'comedy',
                 title: 'Filmes de Comédia',
-                items: await basicFetch(`/discover/movie?with_genres=35?&language=pt-BR&api_key=${API_KEY}`)
+                items: await basicFetch(`/discover/movie?language=pt-BR&api_key=${API_KEY}&with_genres=35`)
             },
             {
             slug: 'horror',
                 title: 'Filmes de Terror',
-                items: await basicFetch(`/discover/movie?with_genres=27?&language=pt-BR&api_key=${API_KEY}`)
+                items: await basicFetch(`/discover/movie?language=pt-BR&api_key=${API_KEY}&with_genres=27`)
             },
             {
             slug: 'romance',
                 title: 'Filmes de Romance',
-                items: await basicFetch(`/discover/movie?with_genres=10749?&language=pt-BR&api_key=${API_KEY}`)
+                items: await basicFetch(`/discover/movie?language=pt-BR&api_key=${API_KEY}&with_genres=10749`)
             },
             {
             slug: 'decumentary',
                 title: 'Documentários',
-                items: await basicFetch(`/discover/movie?with_genres=99?&language=pt-BR&api_key=${API_KEY}`)
+                items: await basicFetch(`/discover/movie?language=pt-BR&api_key=${API_KEY}&with_genres=99`)
             },  
         ];
     },
     getMovieInfo: async (movieId, type) => {
-        let info = {};
+        let info = {}; 
+        
         if(movieId){
             switch(type){
                 case 'movie':
-                    break;
+                    info = await basicFetch(`/movie/${movieId}?api_key=${API_KEY}&language=pt-BR`)
+                break;
+                case 'tv':
+                    info = await basicFetch(`/tv/${movieId}?api_key=${API_KEY}&language=pt-BR`)
+                break;
+                default:
+                    info = null;
+                break;
             }
         }
-
-        return info
+        return info;
     }
 }
